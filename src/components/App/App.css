@@ -1,0 +1,16 @@
+.App {
+  max-width: 1280px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  color: #000000;
+  min-width: 320px;
+  max-width: 1280px;
+  background-color: #FFFFFF;
+  margin: 0 auto;
+  padding: 0 auto;
+}

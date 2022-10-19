@@ -1,0 +1,65 @@
+.navtab {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.5s ease-in-out;
+}
+
+.navtab__container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #FFFFFF;
+  width: 100%;
+  max-width: 520px;
+  height: 100vh;
+  margin: 0;
+  padding: 159px 0 0;
+}
+
+.navtab_visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navtab__close {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 22px;
+  right: 22px;
+}
+
+.navtab__link {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.21;
+}
+
+.navtab__link_focus {
+  border-bottom: solid 2px #000000;
+}
+
+.navtab__button {
+  background-color: #F9F9F9;
+  border-radius: 20px;
+  width: 60px;
+  height: 16px;
+  font-size: 14px;
+  line-height: 1.14;
+  padding: 8px 20px;
+  position: absolute;
+  z-index: 999;
+  bottom: 249px;
+}

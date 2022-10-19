@@ -1,0 +1,138 @@
+.authorization {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 70px auto;
+  padding: 0;
+  max-width: 410px;
+  width: 100%;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization {
+    max-width: 260px;
+  }
+}
+
+.authorization__form_button {
+  position: absolute;
+  bottom: 86px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #FFFFFF;
+  height: 45px;
+  width: 100%;
+  max-width: 396px;
+  background-color: #000000;
+  border: none;
+  border-radius: 3px;
+  margin: 70px 0 16px;
+  padding: 0;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization__form_button {
+    max-width: 260px;
+  }
+}
+
+.authorization__form_error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.20;
+  color: #FF4062;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.authorization__form_error_invisible {
+  display: none;
+}
+
+.authorization__form_header {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.21;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.authorization__form_input {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.21;
+  width: 100%;
+  max-width: 366px;
+  background-color: #F9F9F9;
+  border: none;
+  border-radius: 8px;
+  margin: 0 0 20px;
+  padding: 15px;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization__form_input {
+    max-width: 230px;
+  }
+}
+
+.authorization__form_input:last-of-type {
+  margin: 0;
+}
+
+.authorization__header {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.21;
+  margin: 12px 0 40px;
+  padding: 0;
+}
+
+.authorization__redirect {
+  position: absolute;
+  bottom: 70px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  justify-content: center;
+  margin: 0 55px;
+  padding: 0;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization__redirect {
+    max-width: 246px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.authorization__redirect_link {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #000000;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization__redirect_link {
+    font-size: 12px;
+  }
+}
+
+.authorization__redirect_text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #A0A0A0;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 470px) {
+  .authorization__redirect_text {
+    font-size: 12px;
+  }
+}

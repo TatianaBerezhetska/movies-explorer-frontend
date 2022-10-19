@@ -1,0 +1,152 @@
+@media screen and (max-width:768px) {
+  .about-me {
+    letter-spacing: -1px;
+    padding: 90px 50px 0;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .about-me {
+    padding: 70px 14px 0;
+  }
+}
+
+.about-me__description {
+  display: grid;
+  grid-template-columns: 600px 270px;
+  grid-template-rows: repeat(4, minmax(min-content, max-content));
+  grid-template-areas: 
+    'heading photo'
+    'text photo'
+    'bio photo'
+    'github photo';
+  justify-content: space-between;
+  align-items: center;
+  margin: 64px auto 82px;
+  padding: 0;
+}
+
+@media screen and (max-width: 950px) {
+  .about-me__description {
+    grid-template-columns: 364px 255px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .about-me__description {
+    grid-template-columns: 292px;
+    grid-template-rows: repeat(5, minmax(min-content, max-content));
+    grid-template-areas: 
+      'photo'
+      'heading'
+      'text'
+      'bio'
+      'github';
+    margin-bottom: 70px;
+  }
+}
+
+.about-me__description_header {
+  grid-area: heading;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 970px) {
+  .about-me__description_header {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .about-me__description_header {
+    font-size: 30px;
+    line-height: 1.21;
+    margin-top: 40px;
+  }
+}
+
+.about-me__description_text {
+  grid-area: text;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.11;
+  margin: 18px 0 26px;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__description_text {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.50;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .about-me__description_text {
+    margin-bottom: 20px;
+  }
+}
+
+.about-me__description_bio {
+  grid-area: bio;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.57;
+  margin: 0 0 100px;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__description_bio {
+    font-size: 12px;
+    line-height: 1.50;
+    margin: 0 0 87px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .about-me__description_bio {
+    margin-bottom: 40px;
+  }
+}
+
+.about-me__description_github {
+  grid-area: github;
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.21;
+  margin: 0;
+  padding: 0;
+}
+
+.about-me__description_photo {
+  grid-area: photo;
+  max-height: 327px;
+  width: 270px;
+  border-radius: 10px;
+  box-sizing: content-box;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .about-me__description_photo {
+    max-height: 307px;
+    width: 255px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .about-me__description_photo {
+    max-height: 352px;
+    width: 292px;
+  }
+}
