@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import './Promo.css';
 import logo from "../../../images/logo.svg";
 import logo_globe from "../../../images/landing-logo-globe.svg";
@@ -22,7 +22,7 @@ function Promo() {
         <h1 className="promo__header">Учебный проект студента факультета Веб-разработки.</h1>
         <p className="promo__direction">Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
         <img className="promo__picture" src={logo_globe} alt="Глобус из слов"/>
-        <Link to="#about-project"><button className="promo__button" type="button">Узнать больше</button></Link>
+        <a href="#about-project"><button className="promo__button" type="button">Узнать больше</button></a>
       </div>
     </div>
   );
