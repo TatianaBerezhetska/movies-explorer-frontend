@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './Promo.css';
 import logo from "../../../images/logo.svg";
 import logo_globe from "../../../images/landing-logo-globe.svg";

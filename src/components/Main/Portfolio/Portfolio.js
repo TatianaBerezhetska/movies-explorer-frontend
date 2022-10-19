@@ -7,16 +7,22 @@ function Portfolio() {
     <ul className="potrfolio">
       <h4 className="potrfolio__heading">Портфолио</h4>
       <li className="potrfolio__item">
-        <Link className="link potrfolio__link" to={{pathname: "https://how-to-learn-beta.vercel.app/#"}} target="_blank">Статичный сайт</Link>
-        <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        <Link className="link potrfolio__link" to={{pathname: "https://how-to-learn-beta.vercel.app/#"}} target="_blank">
+          <p className="portfolio__text">Статичный сайт</p>
+          <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        </Link>
       </li>
       <li className="potrfolio__item">
-        <Link className="link potrfolio__link" to={{pathname: "https://russian-travel-iota.vercel.app/"}} target="_blank">Адаптивный сайт</Link>
-        <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        <Link className="link potrfolio__link" to={{pathname: "https://russian-travel-iota.vercel.app/"}} target="_blank">
+          <p className="portfolio__text">Адаптивный сайт</p>
+          <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        </Link>
       </li>
       <li className="potrfolio__item">
-        <Link className="link potrfolio__link" to={{pathname: "https://berezhetska.students.nomoredomains.sbs"}} target="_blank">Одностраничное приложение</Link>
-        <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        <Link className="link potrfolio__link" to={{pathname: "https://berezhetska.students.nomoredomains.sbs"}} target="_blank">
+          <p className="portfolio__text">Одностраничное приложение</p>
+          <img className="potrfolio__icon" src={arrowIcon} alt="Стрелка" />
+        </Link>
       </li>
     </ul>
   );

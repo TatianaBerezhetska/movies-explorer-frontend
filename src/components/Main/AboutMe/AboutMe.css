@@ -1,3 +1,8 @@
+.about-me {
+  margin: 0;
+  padding: 110px 70px 0;
+}
+
 @media screen and (max-width:768px) {
   .about-me {
     letter-spacing: -1px;
