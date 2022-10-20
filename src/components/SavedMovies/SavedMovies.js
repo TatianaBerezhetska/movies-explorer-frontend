@@ -8,8 +8,10 @@ function SavedMovies() {
 
   return (
     <>
-    <SearchForm />
-    <MoviesCardList handleButtonClick={deleteMovie} />
+    <main>
+      <SearchForm />
+      <MoviesCardList handleButtonClick={deleteMovie} />
+    </main>
     <Footer />
     </>
   );

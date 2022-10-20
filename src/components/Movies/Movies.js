@@ -10,9 +10,11 @@ function Movies() {
 
   return (
     <>
-    <SearchForm />
-    <MoviesCardList handleButtonClick={saveMovie} />
-    <MoreButton onClick={loadMore} />
+    <main>
+      <SearchForm />
+      <MoviesCardList handleButtonClick={saveMovie} />
+      <MoreButton onClick={loadMore} />
+    </main>
     <Footer />
     </>
   );
