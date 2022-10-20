@@ -9,7 +9,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   .footer {
     padding: 60px 10px 0;
     letter-spacing: -1px;
@@ -30,7 +30,7 @@
   margin: 0 0 20px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   footer__main-text {
     font-size: 12px;
   }
@@ -44,7 +44,7 @@
   margin: 0;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   .footer__links {
     flex-direction: column;
     align-items: center;
@@ -61,7 +61,7 @@
   padding: 0;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   .footer__link {
     font-size: 12px;
   }
@@ -74,7 +74,7 @@
   margin: 20px 0;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 420px) {
   .footer__nav {
     flex-direction: column-reverse;
     align-items: center;
