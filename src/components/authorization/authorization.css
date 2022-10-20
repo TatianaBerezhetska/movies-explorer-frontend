@@ -95,7 +95,7 @@
   padding: 0;
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 470px) {
   .authorization__header {
     text-align: center;
   }
