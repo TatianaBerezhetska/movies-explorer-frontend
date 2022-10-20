@@ -13,6 +13,12 @@
     max-width: 260px;
   }
 }
+@media screen and (max-width: 470px) {
+  .authorization__logo {
+    display: flex;
+    justify-content: center;
+  }
+}
 
 .authorization__form_button {
   position: absolute;
@@ -87,6 +93,12 @@
   line-height: 1.21;
   margin: 12px 0 40px;
   padding: 0;
+}
+
+@media screen and (max-width: 420px) {
+  .authorization__header {
+    text-align: center;
+  }
 }
 
 .authorization__redirect {

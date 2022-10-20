@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Register() {
   return (
     <div className="authorization">
-      <Link to="/"><img className="logo" src={logo} alt="Логотип"/></Link>
+      <Link className="authorization__logo" to="/"><img className="logo" src={logo} alt="Логотип"/></Link>
       <h1 className="authorization__header">Добро пожаловать!</h1>
       <form className="authorization__form">
         <p className="authorization__form_header">Имя</p>

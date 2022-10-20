@@ -16,7 +16,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 658px) {
   .movies-cardlist {
     grid-template-columns: 1fr;
     gap: 14px;
