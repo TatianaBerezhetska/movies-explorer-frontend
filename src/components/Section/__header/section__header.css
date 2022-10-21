@@ -1,0 +1,15 @@
+.section__header {
+  max-width: 600px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.21;
+  margin: 0 0 23px;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .section__header {
+    font-size: 18px;
+    margin: 0 0 28px;
+  }
+}

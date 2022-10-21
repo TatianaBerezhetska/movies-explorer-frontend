@@ -1,0 +1,14 @@
+.section__description_header {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 970px) {
+  .section__description_header {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+}

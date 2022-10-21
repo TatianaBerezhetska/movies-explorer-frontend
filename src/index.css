@@ -1,0 +1,13 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts.css);
+@import url(./components/App/App.css);
+
+@import url(./components/Section/section.css);
+@import url(./components/Section/__header-container/section__header-container.css);
+@import url(./components/Section/__header/section__header.css);
+@import url(./components/Section/__description/_header/section__description_header.css);
+
+@import url(./components/link/link.css);
+@import url(./components/logo/logo.css);
+@import url(./components/authorization/authorization.css);
+@import url(./components/bold-text/header__link_bold.css);
