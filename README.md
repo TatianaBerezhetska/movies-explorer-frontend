@@ -11,3 +11,7 @@ https://disk.yandex.ru/d/g5m66HOEIpBTrQ
 ```sh
 https://berezhetska.diplomafront.nomorepartiesxyz.ru
 ```
+
+
+Ссылка на pull request:
+https://github.com/TatianaBerezhetska/movies-explorer-frontend/pull/2#issue-1423487519
