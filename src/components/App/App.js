@@ -14,7 +14,11 @@ import "../../index.css";
 import mainApi from "../../utils/MainApi";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if(localStorage.getItem("token")) {
+      return true;
+    }
+  });
   const [registrationOK, setRegistrationOK] = useState(true);
   const [loginOK, setLoginOK] = useState(true);
   const [profileStatusText, setProfileStatusText] = useState("");
@@ -56,21 +60,24 @@ function App() {
         }
       })
       .then((res) => {
-        if (res.token) {
-          setLoggedIn(true);
+        if (!res.token) {
+          setLoginOK(false);
+        } else {
           mainApi
-            .getCurrentUser()
-            .then((currentUser) => {
-              setCurrentUser(currentUser);
-            })
-            .catch((err) => {
-              console.log(`Ошибка при запросе данных пользователя`);
-            });
-          history.push("/movies");
+          .getCurrentUser()
+          .then((currentUser) => {
+            setCurrentUser(currentUser);
+          })
+          .catch((err) => {
+            console.log(`Ошибка при запросе данных пользователя`);
+          });
         }
+        })
+      .then(() => {
+        setLoggedIn(true);
+        history.push("/movies");
       })
       .catch((err) => {
-        setLoginOK(false);
         console.log(err);
       });
   };
@@ -79,12 +86,14 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((res) => {
-        if (res.ok) {
+        if (res.error) {
+          setRegistrationOK(false);
+        } else {
           handleLogin(email, password);
         }
       })
       .catch((err) => {
-        setRegistrationOK(false);
+        
         console.log(err);
       });
   };
@@ -112,14 +121,17 @@ function App() {
 
   const tokenCheck = () => {
     if (localStorage.getItem("token")) {
+      setLoggedIn(true);
       const token = localStorage.getItem("token");
       if (token) {
         mainApi
           .getCurrentUser()
           .then((currentUser) => {
-            setLoggedIn(true);
             setCurrentUser(currentUser);
-            history.push("/");
+            // history.push("/");
+          })
+          .then(() => {
+            setLoggedIn(true);
           })
           .catch((err) => {
             console.log(`Ошибка при запросе данных пользователя`);

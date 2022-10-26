@@ -14,6 +14,7 @@ class Api {
   }
 
   register = (name, email, password) => {
+    console.log('reg api')
     return fetch(`${this.url}/signup`, {
       method: "POST",
       headers: {

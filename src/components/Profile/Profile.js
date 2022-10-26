@@ -46,7 +46,7 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
           <p className="profile__data bold-text">Имя</p>
           <input
             className="profile__data profile__data_input"
-            value={name}
+            value={name || ""}
             name="name"
             {...register("name", {
               required: true,
@@ -61,7 +61,7 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
           </p>
           <input
             className="profile__data profile__data_input"
-            value={email}
+            value={email || ""}
             name="email"
             {...register("email", {
               required: true,
