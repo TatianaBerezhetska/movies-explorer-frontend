@@ -14,7 +14,6 @@ class Api {
   }
 
   getMovies = () => {
-    console.log('beatfilms movie api')
     return fetch(this.url, {
       method: 'GET',
       headers: this.headers,

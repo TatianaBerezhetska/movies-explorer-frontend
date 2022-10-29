@@ -19,7 +19,7 @@ function MoviesCard({movie, onDeleteMovie, onAddMovie} ) {
 
   useEffect(() => {
     checkSavedFilms();
-  }, [savedFilms]);
+  }, []);
 
   const isSaved = savedFilms.some((i) => i.movieId === movie.id);
   

@@ -91,14 +91,13 @@ function Movies({ onLoadingError, onEmptySearch }) {
         )
       )
     )
-    console.log('filtered movies set')
-
-    setRenderedMovies(filteredMovies.slice(0, moviesCount));
-    console.log('rendered movies set')
-
     setIsLoading(false);
     saveSearchParams(searchQuery, renderedMovies);
   };
+
+  useEffect(() => {
+    setRenderedMovies(filteredMovies.slice(0, moviesCount));
+  }, [filteredMovies]);
 
   const saveSearchParams = (text, movies) => {
     localStorage.setItem("searchQueryText", text);

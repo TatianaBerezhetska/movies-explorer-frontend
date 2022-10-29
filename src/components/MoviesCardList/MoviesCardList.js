@@ -9,8 +9,6 @@ function MoviesCardList({isSavedPage, moviesArray, onDeleteMovie, onAddMovie}) {
     <div className="movies-cardlist">
       {isSavedPage ? (
         moviesArray.map((movie) => {
-          console.log('cardlist saved page +')
-
           return (
             <SavedMoviesCard
             movie={movie}
@@ -21,8 +19,6 @@ function MoviesCardList({isSavedPage, moviesArray, onDeleteMovie, onAddMovie}) {
           )
         })
       ) : (moviesArray.map((movie) => {
-        console.log('cardlist saved page -')
-
         return (
           <MoviesCard
           movie={movie}

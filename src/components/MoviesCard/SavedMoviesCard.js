@@ -3,9 +3,6 @@ import deleteButton from '../../images/deleteButton.svg';
 
 function SavedMoviesCard({movie, savedMovies, onDeleteMovie} ) {
 
-  console.log('saved card rendering')
-
-
   const deleteMovie = () => {
     const movieToDelete = savedMovies.find((i) => i._id === movie._id)
     onDeleteMovie(movieToDelete);

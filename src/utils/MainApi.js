@@ -109,7 +109,6 @@ class Api {
   }
 
   getSavedMovies() {
-    console.log('get saved movies')
       return fetch(`${this.url}/movies`, {
         method: 'GET',
         headers: {

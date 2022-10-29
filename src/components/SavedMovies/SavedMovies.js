@@ -10,7 +10,6 @@ function SavedMovies({ onEmptySearch }) {
   const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
-    console.log('saved movies page rendering')
     mainApi
       .getSavedMovies()
       .then((res) => {
@@ -25,7 +24,6 @@ function SavedMovies({ onEmptySearch }) {
   }, []);
 
   const searchSavedFilms = (searchQuery, onlyShortFilms) => {
-    console.log('search saved movies')
     setSavedMovies(
       savedMovies.filter((movie) =>
         onlyShortFilms
