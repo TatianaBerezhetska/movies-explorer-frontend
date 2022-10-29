@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import Main from "../Main/Main";
@@ -15,7 +15,7 @@ import mainApi from "../../utils/MainApi";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(() => {
-    if(localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       return true;
     }
   });
@@ -25,10 +25,6 @@ function App() {
   const [profileInfoColor, setProfileInfoColor] = useState("");
 
   const [currentUser, setCurrentUser] = useState({});
-
-  const [includingShortFilms, setIncludingShortFilms] = useState(
-    JSON.parse(localStorage.getItem("includingShortFilms"))
-  );
 
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [popupText, setPopupText] = useState("");
@@ -64,15 +60,17 @@ function App() {
           setLoginOK(false);
         } else {
           mainApi
-          .getCurrentUser()
-          .then((currentUser) => {
-            setCurrentUser(currentUser);
-          })
-          .catch((err) => {
-            console.log(`Ошибка при запросе данных пользователя`);
-          });
+            .getCurrentUser()
+            .then((currentUser) => {
+              setCurrentUser(currentUser);
+            })
+            .catch((err) => {
+              history.push("/signin");
+              setLoginOK(false);
+              console.log(`Ошибка при запросе данных пользователя`);
+            });
         }
-        })
+      })
       .then(() => {
         setLoggedIn(true);
         history.push("/movies");
@@ -93,13 +91,12 @@ function App() {
         }
       })
       .catch((err) => {
-        
         console.log(err);
       });
   };
 
   const handleEditProfile = (name, email) => {
-    console.log(name, email)
+    console.log(name, email);
     mainApi
       .editProfile(name, email)
       .then((res) => {
@@ -116,6 +113,7 @@ function App() {
   const handleLogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
+    setCurrentUser({});
     history.push("/");
   };
 
@@ -128,7 +126,6 @@ function App() {
           .getCurrentUser()
           .then((currentUser) => {
             setCurrentUser(currentUser);
-            // history.push("/");
           })
           .then(() => {
             setLoggedIn(true);
@@ -137,14 +134,6 @@ function App() {
             console.log(`Ошибка при запросе данных пользователя`);
           });
       }
-    }
-  }
-
-  const handleShortFilmsChange = () => {
-    if (includingShortFilms) {
-      setIncludingShortFilms(false);
-    } else {
-      setIncludingShortFilms(true);
     }
   };
 
@@ -176,8 +165,6 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
-            includingShortFilms={includingShortFilms}
-            onShortFilmsChange={handleShortFilmsChange}
             onLoadingError={handleLoadingError}
             onEmptySearch={handleEmptySearch}
           />
@@ -186,8 +173,6 @@ function App() {
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
-            includingShortFilms={includingShortFilms}
-            onShortFilmsChange={handleShortFilmsChange}
             onEmptySearch={handleEmptySearch}
           />
 
@@ -202,14 +187,22 @@ function App() {
           />
 
           <Route path="/signin">
-            <Login onLogin={handleLogin} loginOK={loginOK} />
+            {!loggedIn ? (
+              <Login onLogin={handleLogin} loginOK={loginOK} />
+            ) : (
+              <Redirect to="/profile" />
+            )}
           </Route>
 
           <Route path="/signup">
-            <Register
-              onRegistration={handleRegistration}
-              registrationOK={registrationOK}
-            />
+            {!loggedIn ? (
+              <Register
+                onRegistration={handleRegistration}
+                registrationOK={registrationOK}
+              />
+            ) : (
+              <Redirect to="/profile" />
+            )}
           </Route>
 
           <Route path="*">

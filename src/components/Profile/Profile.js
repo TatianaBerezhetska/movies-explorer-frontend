@@ -29,7 +29,7 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
   };
 
   const handleEditProfile = ({ name, email }) => {
-    if (currentUser.name !== name || currentUser.email !== email) {
+    if ((currentUser.name !== name) || (currentUser.email !== email)) {
       onEditProfile(name, email);
     }
   };

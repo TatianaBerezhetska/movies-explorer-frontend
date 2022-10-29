@@ -1,9 +1,8 @@
 // запросы к моему API
 
 class Api {
-  constructor({ url, headers }) {
+  constructor({ url }) {
     this.url = url;
-    this.headers = headers;
   }
 
   _checkResponse(res) {
@@ -52,14 +51,20 @@ class Api {
   getCurrentUser() {
     return fetch(`${this.url}/users/me`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._checkResponse);
   }
 
   editProfile(name, email) {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name: name,
         email: email,
@@ -70,7 +75,10 @@ class Api {
   saveMovie(movie) {
     return fetch(`${this.url}/movies`, {
       method: "POST",
-      headers: this.headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         country: movie.country,
         director: movie.director,
@@ -88,11 +96,12 @@ class Api {
   }
 
   deleteMovie(movie) {
-    console.log('api delete')
-    console.log(movie)
     return fetch(`${this.url}/movies/${movie._id}`, {
       method: "DELETE",
-      headers: this.headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         movieId: movie._id,
       }),
@@ -100,19 +109,20 @@ class Api {
   }
 
   getSavedMovies() {
+    console.log('get saved movies')
       return fetch(`${this.url}/movies`, {
         method: 'GET',
-        headers: this.headers,
-      }).then(this._checkResponse);
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+        },
+      }).then(this._checkResponse)
+      .then((data) => data);
   }
 }
 
 const mainApi = new Api({
   url: "https://berezhetska.diploma.nomorepartiesxyz.ru",
-  headers: {
-    authorization: `Bearer ${localStorage.getItem('token')}`,
-    "Content-Type": "application/json",
-  },
 });
 
 export default mainApi;

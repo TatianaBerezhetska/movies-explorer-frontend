@@ -13,10 +13,13 @@ class Api {
     return Promise.reject(res.status);
   }
 
-  getMovies() {
+  getMovies = () => {
+    console.log('beatfilms movie api')
     return fetch(this.url, {
+      method: 'GET',
       headers: this.headers,
-    }).then(this._checkResponse);
+    }).then((res) => this._checkResponse(res))
+    .then((data) => data);
   }
 
 }
@@ -24,7 +27,6 @@ class Api {
 const moviesApi = new Api({
   url: "https://api.nomoreparties.co/beatfilm-movies",
   headers: {
-    // authorization: `Bearer ${localStorage.getItem('token')}`,
     "Content-Type": "application/json",
   },
 });

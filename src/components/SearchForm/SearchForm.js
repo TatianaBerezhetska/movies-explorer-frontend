@@ -4,14 +4,17 @@ import searchIcon from "../../images/search-icon.svg";
 import toggleIconOn from "../../images/smalltumbON.svg";
 import toggleIconOff from "../../images/smalltumbOFF.svg";
 
-function SearchForm({includingShortFilms, onShortFilmsChange, onSubmitSearch, onEmptySearch}) {
+function SearchForm({ onSubmitSearch, onEmptySearch }) {
   const [searchInput, setSearchInput] = useState("");
+  const [onlyShortFilms, setOnlyShortFilms] = useState(false);
 
   const checkLocalStorage = () => {
     if (localStorage.getItem('searchQueryText')) {
       setSearchInput(localStorage.getItem('searchQueryText'));
     };
-    // check short film, too
+    if (localStorage.getItem(onlyShortFilms)) {
+      setOnlyShortFilms(Boolean(localStorage.getItem(onlyShortFilms)));
+    };
   }
 
   useEffect(() => {
@@ -21,6 +24,14 @@ function SearchForm({includingShortFilms, onShortFilmsChange, onSubmitSearch, on
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
+
+  const handleShortFilmsChange = () => {
+    const value = !onlyShortFilms;
+    setOnlyShortFilms(value);
+    onSubmitSearch(searchInput, value);
+    
+    localStorage.setItem('onlyShortFilms', JSON.stringify(value));
+  }
 
   const handleMoviesSearch = (e) => {
     e.preventDefault();
@@ -33,7 +44,7 @@ function SearchForm({includingShortFilms, onShortFilmsChange, onSubmitSearch, on
 
   return (
     <div className="search-form">
-      <form className="search-form__form">
+      <form className="search-form__form" onSubmit={handleMoviesSearch}>
         <input
           className="search-form__input"
           type="type"
@@ -42,17 +53,17 @@ function SearchForm({includingShortFilms, onShortFilmsChange, onSubmitSearch, on
           value={searchInput || ""}
           onChange={handleSearchChange}
         ></input>
-        <button className="search-form__submit" type="submit" onClick={handleMoviesSearch}>
+        <button className="search-form__submit" type="submit">
           <img src={searchIcon} alt="Поиск" />
         </button>
       </form>
       <button
         className="search-form__toggle"
         type="button"
-        onClick={onShortFilmsChange}
+        onClick={handleShortFilmsChange}
       >
         <img
-          src={includingShortFilms ? toggleIconOn : toggleIconOff}
+          src={onlyShortFilms ? toggleIconOn : toggleIconOff}
           alt="Отображать короткометражки"
         />
         Короткометражки

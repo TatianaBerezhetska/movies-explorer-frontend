@@ -11,7 +11,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
-import checkIncludeShortFilms from "../../utils/checkIncludeShortFilms";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {
   desktopWidth,
@@ -23,11 +22,10 @@ import {
   mobileWidth,
   mobileMoviesCount,
   mobileMoviesMore,
+  shortFilmDuration,
 } from "../../utils/constants";
 
-function Movies({ includingShortFilms, onShortFilmsChange, onLoadingError, onEmptySearch }) {
-
-  const currentUser = useContext(CurrentUserContext);
+function Movies({ onLoadingError, onEmptySearch }) {
 
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -45,6 +43,10 @@ function Movies({ includingShortFilms, onShortFilmsChange, onLoadingError, onEmp
   useEffect(() => {
     setMovieslistParams();
   }, [width]);
+
+  useEffect(() => {
+    getAllFilms();
+  }, []);
 
   const setMovieslistParams = () => {
   if (width >= desktopWidth) {
@@ -68,41 +70,38 @@ function Movies({ includingShortFilms, onShortFilmsChange, onLoadingError, onEmp
   const getAllFilms = () => {
     moviesApi
       .getMovies()
-      .then((res) => {
-        setMovies(res);
-      })
+      .then((res) => setMovies(res))
       .catch((err) => {
         onLoadingError();
       });
   };
 
   // фильмы по параметрам поиска
-  const searchFilms = (searchQuery) => {
+  const searchFilms = (searchQuery, onlyShortFilms) => {
     setMovieslistParams();
     setIsLoading(true);
-    getAllFilms();
-    const filteredMovies = movies.filter(function (movie) {
-      return (
-        movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    });
-    // массив фильмов по результатам поиска
-    setFilteredMovies(filteredMovies); 
+    setFilteredMovies(
+      movies.filter((movie) =>
+        onlyShortFilms ? (
+          (movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration) ||
+          (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration)
+        ) : (
+          (movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration) ||
+          (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration)
+        )
+      )
+    )
+    console.log('filtered movies set')
 
-    if(!includingShortFilms) {
-      setFilteredMovies(checkIncludeShortFilms(filteredMovies));
-    }
-    // фильмы, которые будут отрисованы на странице
-    const renderedMovies = filteredMovies.slice(0, moviesCount); 
-    setRenderedMovies(renderedMovies);
+    setRenderedMovies(filteredMovies.slice(0, moviesCount));
+    console.log('rendered movies set')
+
     setIsLoading(false);
     saveSearchParams(searchQuery, renderedMovies);
   };
 
   const saveSearchParams = (text, movies) => {
     localStorage.setItem("searchQueryText", text);
-    localStorage.setItem("includingShortFilms", JSON.stringify(includingShortFilms));
     localStorage.setItem("renderedMovies", JSON.stringify(movies));
   };
 
@@ -135,8 +134,6 @@ function Movies({ includingShortFilms, onShortFilmsChange, onLoadingError, onEmp
       <main>
         <Header />
         <SearchForm
-          includingShortFilms={includingShortFilms}
-          onShortFilmsChange={onShortFilmsChange}
           onSubmitSearch={searchFilms}
           onEmptySearch={onEmptySearch}
         />

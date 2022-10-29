@@ -9,3 +9,5 @@ export const tabletMoviesMore = 2;
 export const mobileWidth = 320;
 export const mobileMoviesCount = 5;
 export const mobileMoviesMore = 2;
+
+export const shortFilmDuration = 40;
