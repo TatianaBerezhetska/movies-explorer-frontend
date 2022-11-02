@@ -11,7 +11,9 @@ import Register from "../Register/Register";
 import NotFound from "../NotFound/NotFound";
 import ErrorPopup from "../ErrorPopup/ErrorPopup";
 import "../../index.css";
+import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+import { shortFilmDuration } from "../../utils/constants";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(() => {
@@ -25,6 +27,11 @@ function App() {
   const [profileInfoColor, setProfileInfoColor] = useState("");
 
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState(JSON.parse(localStorage.getItem("filteredMovies")) || []);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [foundSavedMovies, setFoundSavedMovies] = useState([]);
 
   const [isErrorPopupOpen, setIsErrorPopupOpen] = useState(false);
   const [popupText, setPopupText] = useState("");
@@ -43,6 +50,8 @@ function App() {
       })
       .catch((err) => {
         console.log(`Ошибка при запросе данных пользователя`);
+        setPopupText("Не удалось загрузить ваши данные");
+        setIsErrorPopupOpen(true);
       });
   }, [loggedIn]);
 
@@ -84,7 +93,7 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((res) => {
-        if (res.error) {
+        if (res.message) {
           setRegistrationOK(false);
         } else {
           handleLogin(email, password);
@@ -96,27 +105,35 @@ function App() {
   };
 
   const handleEditProfile = (name, email) => {
-    console.log(name, email);
     mainApi
-      .editProfile(name, email)
-      .then((res) => {
-        setCurrentUser(res);
-        setProfileInfoColor("#C2C2C2");
-        setProfileStatusText("Данные успешно обновлены");
-      })
-      .catch(() => {
+    .editProfile(name, email)
+    .then((res) => {
+      setCurrentUser(res);
+      setProfileInfoColor("#C2C2C2");
+      setProfileStatusText("Данные успешно обновлены");
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        console.log('Ошибка авторизации');
+        handleLogOut();
+      } else  {
         setProfileInfoColor("#FF4062");
         setProfileStatusText("При обновлении профиля произошла ошибка");
-      });
+      }
+    });
   };
 
   const handleLogOut = () => {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
+    setMovies([]);
+    setFilteredMovies([]);
+    setSavedMovies([]);
     history.push("/");
   };
 
+  //проверка токена при первой загрузке страницы
   const tokenCheck = () => {
     if (localStorage.getItem("token")) {
       setLoggedIn(true);
@@ -134,8 +151,160 @@ function App() {
             console.log(`Ошибка при запросе данных пользователя`);
           });
       }
+    } else {
+      setLoggedIn(false);
+      return window.location.replace('/signin');
     }
   };
+
+  const enablePreloader = () => {
+    setIsLoading(true);
+  }
+
+  const disablePreloader = () => {
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    getAllFilms();
+  }, [loggedIn]);
+
+  useEffect(() => {
+    enablePreloader();
+    mainApi
+      .getSavedMovies()
+      .then((res) => {
+        setSavedMovies(res);
+      })
+      .then((res) => {
+        localStorage.setItem("savedMovies", JSON.stringify(res))
+      })
+      .then(() => disablePreloader())
+      .catch((err) => {
+        console.log("Ошибка при получении сохранённых фильмов");
+        setPopupText("Не удалось загрузить ваши фильмы. Попробуйте ещё раз.");
+        setIsErrorPopupOpen(true);
+      });
+  }, [loggedIn]);
+
+    // все фильмы сервиса
+  const getAllFilms = () => {
+    enablePreloader();
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        setMovies(res);
+      })
+      .then(() => disablePreloader())
+      .catch((err) => {
+        handleLoadingError();
+      });
+  };
+
+  const searchMovies = (searchQuery) => {
+    const onlyShortFilms = localStorage.getItem('onlyShortFilms');
+    setFilteredMovies(
+      movies.filter((movie) =>
+        onlyShortFilms==='true' ? (
+          (movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration) ||
+          (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration)
+        ) : (
+          (movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration) ||
+          (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration)
+        )
+      )
+    )
+    localStorage.setItem("searchQueryText", searchQuery);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies))
+  }, [filteredMovies])
+
+  const searchSavedFilms = (searchQuery) => {
+    const onlyShortFilms = localStorage.getItem('onlyShortFilms');
+    setFoundSavedMovies(
+      savedMovies.filter((movie) =>
+        onlyShortFilms==='true'
+          ? (
+            (movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration) ||
+            (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration <= shortFilmDuration)
+          )
+          : ((movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration) ||
+            (movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase()) && movie.duration > shortFilmDuration))
+      )
+    );
+  };
+
+  const deleteSavedMovie = (movie) => {
+    mainApi
+      .deleteMovie(movie)
+      .then(() => {
+        mainApi
+          .getSavedMovies()
+          .then((res) => {
+            setSavedMovies(res);
+          })
+          .catch((err) => {
+            console.log("Ошибка при обновлении сохранённых фильмов");
+          });
+      })
+      .catch((err) => {
+        console.log("Ошибка при удалении фильма");
+        setPopupText("Что-то пошло не так. Попробуйте ещё раз.");
+        setIsErrorPopupOpen(true);
+      });
+  };
+
+  const saveMovie = (movie) => {
+    mainApi
+    .saveMovie(movie)
+    .then(() => {
+      mainApi
+      .getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .then((res) => {
+          localStorage.setItem("savedMovies", JSON.stringify(res))
+        })
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        console.log('Ошибка авторизации');
+        handleLogOut();
+      } else  {
+        console.log('Ошибка при сохранении фильма');
+        setPopupText("Что-то пошло не так. Попробуйте ещё раз.");
+        setIsErrorPopupOpen(true);
+      }
+    })
+  }
+
+  const deleteMovie = (movie) => {
+    mainApi
+    .deleteMovie(movie)
+    .then(() => {
+      mainApi
+      .getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .then((res) => {
+          localStorage.setItem("savedMovies", JSON.stringify(res))
+        })
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        console.log('Ошибка авторизации');
+        handleLogOut();
+      } else  {
+        console.log('Ошибка при удалении фильма');
+        setPopupText("Что-то пошло не так. Попробуйте ещё раз.");
+        setIsErrorPopupOpen(true);
+      }
+    })
+  }
 
   const handleLoadingError = () => {
     setPopupText(
@@ -165,15 +334,25 @@ function App() {
             path="/movies"
             loggedIn={loggedIn}
             component={Movies}
+            savedMovies={savedMovies}
+            filteredMovies={filteredMovies}
+            searchMovies= {searchMovies}
             onLoadingError={handleLoadingError}
             onEmptySearch={handleEmptySearch}
+            onSaveMovie={saveMovie}
+            onDeleteMovie={deleteMovie}
           />
 
           <ProtectedRoute
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
+            savedMovies={savedMovies}
+            foundSavedMovies={foundSavedMovies}
+            searchSavedFilms={searchSavedFilms}
+            isLoading={isLoading}
             onEmptySearch={handleEmptySearch}
+            deleteMovie={deleteSavedMovie}
           />
 
           <ProtectedRoute

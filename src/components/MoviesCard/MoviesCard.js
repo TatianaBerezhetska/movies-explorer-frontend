@@ -1,34 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './MoviesCard.css';
 import buttonTick from '../../images/savedButton.svg';
 import buttonSave from '../../images/saveButton.svg';
-import mainApi from "../../utils/MainApi";
 
-function MoviesCard({movie, onDeleteMovie, onAddMovie} ) {
+function MoviesCard({movie, savedFilms, onDeleteMovie, onAddMovie} ) {
 
-  const [savedFilms, setSavedFilms] = useState([]);
+  const [isSaved, setIsSaved] = useState(() => 
+    savedFilms.some((i) => i.movieId === movie.id))
 
-  const checkSavedFilms = () => {
-    mainApi
-    .getSavedMovies()
-    .then((res) => {
-      setSavedFilms(res);
-    })
-    .catch((err) => console.log(err));
-  }
-
-  useEffect(() => {
-    checkSavedFilms();
-  }, []);
-
-  const isSaved = savedFilms.some((i) => i.movieId === movie.id);
-  
   const deleteMovie = () => {
     const movieToDelete = savedFilms.find((i) => i.movieId === movie.id)
+    setIsSaved(false);
     onDeleteMovie(movieToDelete);
   }
 
   const addMovie = () => {
+    setIsSaved(true);
     onAddMovie(movie);
   }
 

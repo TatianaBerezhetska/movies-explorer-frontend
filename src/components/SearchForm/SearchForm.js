@@ -6,14 +6,11 @@ import toggleIconOff from "../../images/smalltumbOFF.svg";
 
 function SearchForm({ onSubmitSearch, onEmptySearch }) {
   const [searchInput, setSearchInput] = useState("");
-  const [onlyShortFilms, setOnlyShortFilms] = useState(false);
+  const [onlyShortFilms, setOnlyShortFilms] = useState(localStorage.getItem('onlyShortFilms') || false);
 
   const checkLocalStorage = () => {
     if (localStorage.getItem('searchQueryText')) {
       setSearchInput(localStorage.getItem('searchQueryText'));
-    };
-    if (localStorage.getItem(onlyShortFilms)) {
-      setOnlyShortFilms(Boolean(localStorage.getItem(onlyShortFilms)));
     };
   }
 
@@ -28,8 +25,6 @@ function SearchForm({ onSubmitSearch, onEmptySearch }) {
   const handleShortFilmsChange = () => {
     const value = !onlyShortFilms;
     setOnlyShortFilms(value);
-    onSubmitSearch(searchInput, value);
-    
     localStorage.setItem('onlyShortFilms', JSON.stringify(value));
   }
 
@@ -63,7 +58,7 @@ function SearchForm({ onSubmitSearch, onEmptySearch }) {
         onClick={handleShortFilmsChange}
       >
         <img
-          src={onlyShortFilms ? toggleIconOn : toggleIconOff}
+          src={Boolean(onlyShortFilms) ? toggleIconOn : toggleIconOff}
           alt="Отображать короткометражки"
         />
         Короткометражки

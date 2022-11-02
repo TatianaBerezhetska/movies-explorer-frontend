@@ -17,8 +17,8 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({mode: 'all', reValidateMode: 'onChange', criteriaMode: 'all'});
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -72,7 +72,7 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
           ></input>
           {errors.name || errors.email ? (
             <p className="profile__info" style={{ color: "#FF4062" }}>
-              При обновлении профиля произошла ошибка
+              Заполните поля верной информацией
             </p>
           ) : (
             <p className="profile__info" style={{ color: infoColor }}>
@@ -83,7 +83,7 @@ function Profile({ onEditProfile, statusText, infoColor, onLogOut }) {
             className={`profile__edit ${
               !(errors.name || errors.email) && "profile__edit_abled"
             }`}
-            type="submit"
+            type="submit" disabled={!isValid}
           >
             Редактировать
           </button>

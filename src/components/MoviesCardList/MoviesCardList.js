@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import SavedMoviesCard from '../MoviesCard/SavedMoviesCard';
 
-function MoviesCardList({isSavedPage, moviesArray, onDeleteMovie, onAddMovie}) {
+function MoviesCardList({isSavedPage, moviesArray, savedFilms, onDeleteMovie, onAddMovie}) {
 
   return (
     <div className="movies-cardlist">
@@ -23,6 +23,7 @@ function MoviesCardList({isSavedPage, moviesArray, onDeleteMovie, onAddMovie}) {
           <MoviesCard
           movie={movie}
           key={movie.id}
+          savedFilms={savedFilms}
           onDeleteMovie={onDeleteMovie}
           onAddMovie={onAddMovie}
           />
