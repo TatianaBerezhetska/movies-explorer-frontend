@@ -203,6 +203,7 @@ function App() {
 
   const searchMovies = (searchQuery) => {
     const onlyShortFilms = localStorage.getItem('onlyShortFilms');
+    // console.log(onlyShortFilms)
     setFilteredMovies(
       movies.filter((movie) =>
         onlyShortFilms==='true' ? (

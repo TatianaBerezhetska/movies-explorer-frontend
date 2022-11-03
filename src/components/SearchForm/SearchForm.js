@@ -6,7 +6,7 @@ import toggleIconOff from "../../images/smalltumbOFF.svg";
 
 function SearchForm({ onSubmitSearch, onEmptySearch }) {
   const [searchInput, setSearchInput] = useState("");
-  const [onlyShortFilms, setOnlyShortFilms] = useState(localStorage.getItem('onlyShortFilms') || false);
+  const [onlyShortFilms, setOnlyShortFilms] = useState(localStorage.getItem('onlyShortFilms')==='true' || false);
 
   const checkLocalStorage = () => {
     if (localStorage.getItem('searchQueryText')) {
@@ -58,7 +58,7 @@ function SearchForm({ onSubmitSearch, onEmptySearch }) {
         onClick={handleShortFilmsChange}
       >
         <img
-          src={Boolean(onlyShortFilms) ? toggleIconOn : toggleIconOff}
+          src={onlyShortFilms ? toggleIconOn : toggleIconOff}
           alt="Отображать короткометражки"
         />
         Короткометражки
