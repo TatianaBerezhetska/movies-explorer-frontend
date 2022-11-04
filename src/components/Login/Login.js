@@ -55,7 +55,7 @@ function Login({onLogin, loginOK}) {
       </form>
       <div className="authorization__redirect">
         <p className="authorization__redirect_text">Ещё не зарегистрированы?</p>
-        <Link className="authorization__redirect_link" to="/signin">
+        <Link className="authorization__redirect_link" to="/signup">
           Регистрация
         </Link>
       </div>

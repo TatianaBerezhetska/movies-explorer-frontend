@@ -43,7 +43,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    mainApi
+    if (loggedIn) {
+      mainApi
       .getCurrentUser()
       .then((currentUser) => {
         setCurrentUser(currentUser);
@@ -53,6 +54,7 @@ function App() {
         setPopupText("Не удалось загрузить ваши данные");
         setIsErrorPopupOpen(true);
       });
+    } 
   }, [loggedIn]);
 
   const handleLogin = (email, password) => {
@@ -151,9 +153,6 @@ function App() {
             console.log(`Ошибка при запросе данных пользователя`);
           });
       }
-    } else {
-      setLoggedIn(false);
-      return window.location.replace('/signin');
     }
   };
 
@@ -170,21 +169,23 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    enablePreloader();
-    mainApi
-      .getSavedMovies()
-      .then((res) => {
-        setSavedMovies(res);
-      })
-      .then((res) => {
-        localStorage.setItem("savedMovies", JSON.stringify(res))
-      })
-      .then(() => disablePreloader())
-      .catch((err) => {
-        console.log("Ошибка при получении сохранённых фильмов");
-        setPopupText("Не удалось загрузить ваши фильмы. Попробуйте ещё раз.");
-        setIsErrorPopupOpen(true);
-      });
+    if (loggedIn) {
+      enablePreloader();
+      mainApi
+        .getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .then((res) => {
+          localStorage.setItem("savedMovies", JSON.stringify(res))
+        })
+        .then(() => disablePreloader())
+        .catch((err) => {
+          console.log("Ошибка при получении сохранённых фильмов");
+          setPopupText("Не удалось загрузить ваши фильмы. Попробуйте ещё раз.");
+          setIsErrorPopupOpen(true);
+        });
+    }
   }, [loggedIn]);
 
     // все фильмы сервиса
