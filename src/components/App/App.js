@@ -67,9 +67,7 @@ function App() {
         }
       })
       .then((res) => {
-        if (!res.token) {
-          setLoginOK(false);
-        } else {
+        if(res.token) {  
           mainApi
             .getCurrentUser()
             .then((currentUser) => {
@@ -80,7 +78,7 @@ function App() {
               // setLoginOK(false);
               console.log(`Ошибка при запросе данных пользователя`);
             });
-        }
+          }
       })
       .then(() => {
         setLoggedIn(true);
