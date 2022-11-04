@@ -67,18 +67,18 @@ function App() {
         }
       })
       .then((res) => {
-        if(res.token) {  
+        if (!res.token) {
+          setLoginOK(false);
+        } else {
           mainApi
             .getCurrentUser()
             .then((currentUser) => {
               setCurrentUser(currentUser);
             })
             .catch((err) => {
-              // history.push("/signin");
-              // setLoginOK(false);
               console.log(`Ошибка при запросе данных пользователя`);
             });
-          }
+        }
       })
       .then(() => {
         setLoggedIn(true);

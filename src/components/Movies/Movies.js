@@ -8,7 +8,6 @@ import MoreButton from "../MoreButton/MoreButton";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 
-import mainApi from "../../utils/MainApi";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import {
   desktopWidth,
