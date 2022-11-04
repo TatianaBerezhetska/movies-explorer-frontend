@@ -82,6 +82,11 @@
   color: #000000;
 }
 
+.profile__edit:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 .profile__logout {
   grid-column: span 2;
   border: none;
@@ -93,4 +98,9 @@
   color: #FF4062;
   margin: 0 auto;
   padding: 0;
+}
+
+.profile__logout:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }

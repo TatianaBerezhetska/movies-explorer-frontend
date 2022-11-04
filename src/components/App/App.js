@@ -85,6 +85,9 @@ function App() {
         history.push("/movies");
       })
       .catch((err) => {
+        if (err ===401) {
+          setLoginOK(false);
+        }
         console.log(err);
       });
   };

@@ -13,6 +13,8 @@ function Login({onLogin, loginOK}) {
     onLogin(email, password);
   };
 
+  console.log(loginOK)
+
   return (
     <div className="authorization">
       <Link className="authorization__logo" to="/">
