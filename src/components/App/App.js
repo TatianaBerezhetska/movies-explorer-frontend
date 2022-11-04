@@ -76,8 +76,8 @@ function App() {
               setCurrentUser(currentUser);
             })
             .catch((err) => {
-              history.push("/signin");
-              setLoginOK(false);
+              // history.push("/signin");
+              // setLoginOK(false);
               console.log(`Ошибка при запросе данных пользователя`);
             });
         }
