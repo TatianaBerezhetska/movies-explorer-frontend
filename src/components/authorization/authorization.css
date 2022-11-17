@@ -23,6 +23,8 @@
 .authorization__form_button {
   position: absolute;
   bottom: 86px;
+  left: 0;
+  right: 0;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.21;
@@ -33,8 +35,12 @@
   background-color: #000000;
   border: none;
   border-radius: 3px;
-  margin: 70px 0 16px;
+  margin: 70px auto 16px;
   padding: 0;
+}
+
+.authorization__form_button:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 470px) {
@@ -43,17 +49,42 @@
   }
 }
 
+.authorization__form_button_disabled {
+  color: #C2C2C2;
+  background-color: #F8F8F8;
+}
+
+.authorization__form_button_disabled:hover {
+  cursor: not-allowed;
+}
+
 .authorization__form_error {
+  visibility: visible;
   font-weight: 400;
   font-size: 10px;
   line-height: 1.20;
   color: #FF4062;
-  margin: 10px 0 0;
+  margin: 0 0 10px;
   padding: 0;
 }
 
-.authorization__form_error_invisible {
-  display: none;
+.authorization__form_error_final {
+  visibility: hidden;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.20;
+  text-align: center;
+  color: #FF4062;
+  position: absolute;
+  bottom: 136px;
+  width: 100%;
+  max-width: 396px;
+  margin: 0 auto 20px;
+  padding: 0;
+}
+
+.authorization__form_error_final_visible {
+  visibility: visible;
 }
 
 .authorization__form_header {
@@ -81,10 +112,6 @@
   .authorization__form_input {
     max-width: 230px;
   }
-}
-
-.authorization__form_input:last-of-type {
-  margin: 0;
 }
 
 .authorization__header {

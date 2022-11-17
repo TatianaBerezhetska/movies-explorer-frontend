@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, Link, NavLink } from "react-router-dom";
 import NavTab from "../NavTab/NavTab.js";
 import "./Header.css";
 import logo from "../../images/logo.svg";
@@ -7,15 +7,20 @@ import burgerIcon from "../../images/burgerIcon.svg";
 
 function Header() {
   
-const [navTabIsOpen, setNavTabIsOpen] = useState(false);
+  const location = useLocation();
+  const [isNavTabOpen, setIsNavTabOpen] = useState(false);
 
   const handleNavtabClick = () => {
-    setNavTabIsOpen(true);
+    setIsNavTabOpen(true);
+  };
+
+  const handleNavTabClose = () => {
+    setIsNavTabOpen(false);
   };
 
   return (
     <>
-      <section className="header">
+      <section className={`header ${location.pathname === '/' && "header_pink"}`}>
         <Link to="/">
           <img className="logo" src={logo} alt="Логотип" />
         </Link>
@@ -38,7 +43,7 @@ const [navTabIsOpen, setNavTabIsOpen] = useState(false);
           <img src={burgerIcon} alt="Бургерное меню" />
         </button>
       </section>
-      <NavTab />
+      <NavTab isOpen={isNavTabOpen} onClickClose={handleNavTabClose} />
     </>
   );
 }

@@ -39,6 +39,11 @@
   right: 22px;
 }
 
+.navtab__close:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
 .navtab__link {
   text-decoration: none;
   color: #000000;

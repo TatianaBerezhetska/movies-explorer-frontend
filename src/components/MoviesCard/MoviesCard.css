@@ -68,6 +68,10 @@
   object-fit: cover;
 }
 
+.movies-card__thumbnail:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .movies-card__thumbnail {
     width: 342px;
